@@ -4,5 +4,28 @@
 
 @theme {
   --font-poppins: "Poppins", sans-serif;
+  --color-button: #44E5E7;
+  --color-white: #ECFCFD;
+  --color-para: #C7F7F8;
 }
 
+ .h1 {
+    @apply text-[84px] font-normal leading-[84px] tracking-[-0.03em];
+  }
+
+    .h4 {
+    @apply text-[40px] font-semibold leading-[52px];
+  }
+
+  .h5 {
+    @apply text-[32px] font-semibold leading-[40px];
+  }
+
+   .base {
+    @apply text-[16px] font-medium leading-[24px] tracking-[0.03em];
+  }
+
+
+.container {
+    @apply mx-auto max-w-[1252px] px-16 max-xl:px-10 max-lg:px-6 max-sm:px-6;
+}
