@@ -1,12 +1,21 @@
 import { nav_links } from "../constants";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "./Button";
 
 
 const Navbar = () => {
+    const [scroll, setScroll] = useState<boolean>(false)
     const [toggle, setToggle] = useState<boolean>(false)
+
+    useEffect(()=>{
+      const handleScroll = ()=>{
+        setScroll(window.scrollY > 200)
+      }
+      window.addEventListener('scroll', handleScroll)
+      return ()=> window.removeEventListener('scroll',handleScroll)
+    }, [])
    return (
-   <header className='fixed top-0 left-0 w-full py-6 z-40'>
+   <header className={`${scroll ? 'bg-feature shadow' : 'bg-transparent'} fixed top-0 left-0 w-full py-6 z-40`}>
     <nav className='container flex items-center justify-between'>
         <a href="" className="flex items-center gap-3">
             <img src="/Logo.svg" alt="logo" />

@@ -46,12 +46,13 @@ export const features = [
 ]
 
 export const works = [
+
     {
         title: "Upload Your Note",
         content: "Drag and drop your file or paste your content directly into the app."
     },
     {
-        title: "AI Processes the Tex",
+        title: "AI Processes the Text",
         content: "Our AI scans your document, identifies key points, and generates a summary."
     },
     {
