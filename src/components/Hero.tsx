@@ -3,7 +3,7 @@ import Button from "./Button";
 
 const Hero = () => {
   return (
-    <section className="relative h-screen bg-[#061212]">
+    <section className="relative h-screen bg-feature  bg-cover bg-center bg-no-repeat">
       <div className="container mx-auto px-4 pt-32 flex max-lg:flex-col items-center justify-between gap-10">
         {/* Text */}
         <motion.div
