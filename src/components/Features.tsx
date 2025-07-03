@@ -25,7 +25,7 @@ const itemVariants = {
 
 const Features = () => {
   return (
-    <section className="relative sm:py-12 py-6 bg-gradient-to-b from-[#0E2E2E] to-[#061212]">
+    <section id="feature" className="relative sm:py-16 py-6 bg-gradient-to-b from-[#0E2E2E] to-[#061212]">
       <div className="container">
         <h4 className="sm:text-6xl text-3xl text-white text-center">
           Powerful Features to Help You<br />

@@ -11,6 +11,10 @@
   --color-feature: #061212;
 }
 
+body {
+  scroll-behavior: smooth
+}
+
  .h1 {
     @apply text-[84px] font-normal leading-[84px] tracking-[-0.03em];
   }
