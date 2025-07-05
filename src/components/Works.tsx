@@ -24,7 +24,7 @@ const itemVariants = {
 
 const Works = () => {
   return (
-    <div id="works" className="relative bg-feature py-12">
+    <div id="works" className="relative bg-feature py-28">
       <div className="container">
         <h4 className="sm:text-5xl text-3xl text-white text-center capitalize">
           How it works
