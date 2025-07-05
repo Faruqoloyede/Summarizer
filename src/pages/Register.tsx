@@ -1,7 +1,14 @@
+import Banner from "../components/Banner"
+import Login from "../components/Login"
+
 
 const Register = () => {
   return (
-    <div>Register</div>
+    <div className="flex items-center">
+      <Banner />
+      <Login />
+      
+    </div>
   )
 }
 

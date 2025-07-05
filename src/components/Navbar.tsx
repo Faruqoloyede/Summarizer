@@ -28,7 +28,7 @@ const Navbar = () => {
         </ul>
         {/* link */}
         <div className="sm:flex hidden">
-            <Button title="Get Started" to="/login" />
+            <Button title="Get Started" to="/register" />
         </div>
              <div className="sm:hidden flex flex-1 items-center justify-end">
           <img src="/menu.png" className="cursor-pointer" onClick={() => setToggle(true)}
@@ -48,7 +48,7 @@ const Navbar = () => {
             ))}
             </ul>
             <div className="flex items-center justify-center mt-10">
-             <Button title="Get Started" to="/login" />
+             <Button title="Get Started" to="/register" />
         </div>
           </div>
         </div>

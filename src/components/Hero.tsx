@@ -18,7 +18,7 @@ const Hero = () => {
           <p className="text-base text-para my-4 max-w-lg mx-auto lg:mx-0">
            Upload notes, documents, or PDFs and let AI generate concise, readable summaries in seconds. Save time. Stay focused. Learn smarter.
           </p>
-          <Button title="Get Started" to="/login" />
+          <Button title="Get Started" to="/register" />
         </motion.div>
 
         {/* Image */}
