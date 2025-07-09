@@ -1,8 +1,12 @@
 import { IoMdArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useParams } from "react-router-dom";
 
 const Banner = () => {
+    const params = useParams();
+    const isLoginPage = params.page === "/login";
+
   return (
     <div className="bg-[#0E2E2E] h-screen pt-12 flex-1 max-lg:hidden">
       <div className="mx-auto px-12">
@@ -20,7 +24,7 @@ const Banner = () => {
             transition={{ duration: 0.8 }}
             className="font-poppins font-bold text-center text-[48px] leading-tight text-white capitalize"
           >
-            Let’s Get You Signed Up
+            {isLoginPage ? "Welcome back" : "Let’s Get You Signed Up"}
           </motion.h2>
 
           <motion.p

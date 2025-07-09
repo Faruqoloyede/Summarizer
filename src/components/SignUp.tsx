@@ -2,6 +2,8 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
   firstName: string;
@@ -10,11 +12,20 @@ type FormData = {
 };
 
 const SignUp = () => {
+  const {loginWithGoogle} = useAuth();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+
+
+  const handleGoogleLogin = async ()=>{
+    await loginWithGoogle()
+    navigate('/dashboard')
+  }
 
   const onSubmit = (data: FormData) => {
     console.log("Form Submitted", data);
@@ -58,7 +69,7 @@ const SignUp = () => {
               type="text"
               {...register("firstName", { required: "Full name is required" })}
               placeholder="Full Name"
-              className="w-full border border-[#DAFAFA] bg-para rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-button"
+              className="w-full border border-[#DAFAFA] bg-[#DAFAFA] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-button"
             />
             {errors.firstName && (
               <p className="text-red-500 text-sm mt-1">
@@ -78,7 +89,7 @@ const SignUp = () => {
                 },
               })}
               placeholder="Email Address"
-              className="w-full border border-[#DAFAFA] bg-para rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-button"
+              className="w-full border border-[#DAFAFA] bg-[#DAFAFA] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-button"
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">
@@ -98,7 +109,7 @@ const SignUp = () => {
                 },
               })}
               placeholder="Password"
-              className="w-full border border-[#DAFAFA] bg-para rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-button"
+              className="w-full border border-[#DAFAFA] bg-[#DAFAFA] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-button"
             />
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">
@@ -128,10 +139,11 @@ const SignUp = () => {
         </motion.div>
 
         <motion.div
-          className="bg-white w-full rounded-md flex items-center justify-center gap-x-3 py-4 px-4"
+          className="bg-white w-full cursor-pointer rounded-md flex items-center justify-center gap-x-3 py-4 px-4"
           variants={fadeInUp(1)}
           initial="initial"
           animate="animate"
+          onClick={handleGoogleLogin}
         >
           <FcGoogle className="text-2xl" />
           Sign up with Google

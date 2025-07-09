@@ -67,7 +67,7 @@ const SignIn = () => {
                 },
               })}
               placeholder="Email Address"
-              className="w-full border border-[#DAFAFA] bg-para rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-button"
+              className="w-full border border-[#DAFAFA] bg-[#DAFAFA] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-button"
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -85,7 +85,7 @@ const SignIn = () => {
                 },
               })}
               placeholder="Password"
-              className="w-full border border-[#DAFAFA] bg-para rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-button"
+              className="w-full border border-[#DAFAFA] bg-[#DAFAFA] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-button"
             />
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">
@@ -117,7 +117,7 @@ const SignIn = () => {
 
         {/* Google Button */}
         <motion.div
-          className="bg-white w-full rounded-md flex items-center justify-center gap-x-3 py-4 px-4"
+          className="bg-white w-full cursor-pointer rounded-md flex items-center justify-center gap-x-3 py-4 px-4"
           variants={fadeInUp(0.7)}
           initial="initial"
           animate="animate"
