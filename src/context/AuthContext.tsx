@@ -8,12 +8,18 @@ import {
   signOut,
   onAuthStateChanged,
   type User,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  type UserCredential,
 } from 'firebase/auth';
 
-type AuthContextType = {
+interface AuthContextType  {
   user: User | null;
-  loginWithGoogle: () => void;
+  loginWithGoogle: () => Promise<UserCredential>;
+  signUp: (email: string, password: string) => Promise<UserCredential>
+  login: (email: string, password: string) => Promise<UserCredential>
   logout: () => void;
+
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -31,14 +37,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   // Sign in with Google
-  const loginWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      setUser(result.user);
-    } catch (error) {
-      console.error('Google login failed:', error);
-    }
+  const loginWithGoogle = async (): Promise<UserCredential> => {
+    const result = await signInWithPopup(auth, provider);
+    setUser(result.user);
+    return result;
   };
+
+  // sign up with email and password
+
+ const signUp = (email: string, password: string): Promise<UserCredential> => {
+  return createUserWithEmailAndPassword(auth, email, password);
+};
+
+  // sign in with email and password
+  const login = (email: string, password: string): Promise<UserCredential>=>{
+    return signInWithEmailAndPassword(auth, email, password)
+  }
 
   // Logout
   const logout = async () => {
@@ -47,7 +61,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loginWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loginWithGoogle, logout, signUp, login }}>
       {children}
     </AuthContext.Provider>
   );

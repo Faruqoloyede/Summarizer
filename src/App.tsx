@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import { AuthProvider } from "./context/AuthContext";
 import Dashboard from "./pages/Dashboard";
 import Privateroute from "./protectedroute/Privateroute";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         </Privateroute>} />
       </Routes>
     </Router>
+    <Toaster position="top-right" reverseOrder={false} />
     </AuthProvider>
   )
 }

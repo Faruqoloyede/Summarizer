@@ -4,6 +4,12 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { setDoc, doc } from "firebase/firestore";
+import { db } from "../config/firebase";
+
+
 
 type FormData = {
   firstName: string;
@@ -12,25 +18,45 @@ type FormData = {
 };
 
 const SignUp = () => {
-  const {loginWithGoogle} = useAuth();
+  const {loginWithGoogle, signUp} = useAuth();
   const navigate = useNavigate();
+  const [loading, setloading] =useState(false)
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>();
 
 
   const handleGoogleLogin = async ()=>{
-    await loginWithGoogle()
+    loginWithGoogle()
     navigate('/dashboard')
   }
 
-  const onSubmit = (data: FormData) => {
-    console.log("Form Submitted", data);
+  
+  const onSubmit = async (data: FormData) => {
+    setloading(true)
+    try{
+      const userCredential = await signUp(data.email, data.password);
+      const user = userCredential.user
+      await setDoc(doc(db, 'users', user.uid), {
+        uid: user.uid,
+        name: data.firstName,
+        email: data.email,
+        createdAt: new Date()
+      })
+      toast.success("Account created successfully")
+      navigate('/login')
+    }catch(error){
+      console.log(error)
+    }finally{
+      setloading(false)
+      reset()
+    }
   };
-
+  
   const fadeInUp = (delay: number = 0) => ({
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.6, delay } },
@@ -120,10 +146,11 @@ const SignUp = () => {
 
           <motion.button
             type="submit"
+            disabled={loading}
             className="w-full bg-button cursor-pointer text-[#0E2E2E] font-medium font-poppins py-4 rounded-md hover:bg-opacity-90 transition duration-200"
             variants={fadeInUp(0.7)}
           >
-            Create account
+            {loading ? "Creating Account..." : "Create Account"}
           </motion.button>
         </motion.form>
 

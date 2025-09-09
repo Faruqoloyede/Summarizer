@@ -5,7 +5,7 @@ import type { JSX } from "react";
 const Privateroute = ({children}: {children: JSX.Element}) => {
     const {user} = useAuth();
 
-  return user ? children : <Navigate to='/login' />
+  return user ? children : <Navigate to='/login' replace />
 }
 
 export default Privateroute
