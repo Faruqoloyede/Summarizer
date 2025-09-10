@@ -1,4 +1,4 @@
-import { FiFile, FiTrash2, FiDownload, FiSearch } from 'react-icons/fi';
+import { FiFile, FiTrash2, FiDownload } from 'react-icons/fi';
 import { type Document } from '../types';
 
 interface LibraryTabProps {
@@ -12,14 +12,6 @@ const LibraryTab = ({ documents, setSelectedDoc, deleteDocument }: LibraryTabPro
     <div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-[#0E2E2E]">Document Library</h2>
-        <div className="relative">
-          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#0E2E2E]/50" />
-          <input 
-            type="text" 
-            placeholder="Search documents..." 
-            className="pl-10 pr-4 py-2 border border-[#44E5E7]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44E5E7] bg-white text-[#0E2E2E]"
-          />
-        </div>
       </div>
       
       {documents.length === 0 ? (

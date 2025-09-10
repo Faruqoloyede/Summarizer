@@ -1,5 +1,6 @@
-import { FiHome, FiBook, FiSettings, FiMenu, FiLogOut } from 'react-icons/fi';
+import { FiHome, FiBook, FiLogOut } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
+import UserProfile from './UserProfile';
 
 interface SidebarProps {
   activeTab: string;
@@ -10,35 +11,21 @@ interface SidebarProps {
 
 
 
-const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }: SidebarProps) => {
+const Sidebar = ({ activeTab, setActiveTab, sidebarOpen }: SidebarProps) => {
     const {logout} = useAuth()
 const handleLogout = async ()=>{
     await logout()
 }
   return (
-    <div className={`${sidebarOpen ? 'w-64' : 'w-20'} bg-[#0E2E2E] text-white shadow-md transition-all duration-300`}>
-      <div className="flex items-center justify-between p-4 border-b border-[#44E5E7]/20">
-        {sidebarOpen && (
-           <a href="" className="flex items-center gap-3">
-            <img src="/Logo.svg" alt="logo" />
-            <span className="text-[20px] font-bold font-poppins text-white">Summerizer</span>
-        </a>
-        )}
-        <button 
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 rounded-lg hover:bg-[#44E5E7]/10 text-[#44E5E7]"
-        >
-          <FiMenu />
-        </button>
-      </div>
-      
+    <>
+    <div className='bg-[#0E2E2E] text-white shadow-md transition-all duration-300 relative w-72 sm:block hidden'>
       <nav className="mt-6">
         <button 
           onClick={() => setActiveTab('home')}
           className={`flex items-center w-full p-4 ${activeTab === 'home' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
         >
           <FiHome className="text-lg" />
-          {sidebarOpen && <span className="ml-3">Home</span>}
+         <span className="ml-3">Home</span>
         </button>
         
         <button 
@@ -46,7 +33,7 @@ const handleLogout = async ()=>{
           className={`flex items-center w-full p-4 ${activeTab === 'library' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
         >
           <FiBook className="text-lg" />
-          {sidebarOpen && <span className="ml-3">Library</span>}
+           <span className="ml-3">Library</span>
         </button>
         
         <button 
@@ -54,10 +41,48 @@ const handleLogout = async ()=>{
           className={`flex items-center w-full p-4 ${activeTab === 'settings' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
         >
           <FiLogOut className="text-lg" />
-          {sidebarOpen && <span className="ml-3">Logout</span>}
+          <span className="ml-3">Logout</span>
         </button>
       </nav>
+      <div className='absolute bottom-10 left-0 border-t border-[#44E5E7]/20'>
+          <UserProfile/>
+      </div>
     </div>
+
+      {sidebarOpen && (
+         <div className='bg-[#0E2E2E] text-white shadow-md transition-all duration-300 relative w-64 z-40 sm:hidden block'>
+      
+      <nav className="mt-6">
+        <button 
+          onClick={() => setActiveTab('home')}
+          className={`flex items-center w-full p-4 ${activeTab === 'home' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
+        >
+          <FiHome className="text-lg" />
+          <span className="ml-3">Home</span>
+        </button>
+        
+        <button 
+          onClick={() => setActiveTab('library')}
+          className={`flex items-center w-full p-4 ${activeTab === 'library' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
+        >
+          <FiBook className="text-lg" />
+          <span className="ml-3">Library</span>
+        </button>
+        
+        <button 
+          onClick={handleLogout}
+          className={`flex items-center w-full p-4 ${activeTab === 'settings' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
+        >
+          <FiLogOut className="text-lg" />
+          <span className="ml-3">Logout</span>
+        </button>
+      </nav>
+      <div className='absolute bottom-10 left-0 border-t border-[#44E5E7]/20'>
+          <UserProfile />
+      </div>
+    </div>
+      )}
+    </>
   );
 };
 

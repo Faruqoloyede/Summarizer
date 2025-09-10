@@ -4,10 +4,11 @@ import HomeTab from './HomeTab';
 import LibraryTab from './LibraryTab';
 import SummaryPanel from './SummaryPanel';
 import { useDocumentManagement } from '../context/useDocumentManagement';
+import Header from './Header';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState<'home' | 'library' | 'settings'>('home');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
   const {
     documents,
@@ -21,6 +22,8 @@ const Dashboard = () => {
   } = useDocumentManagement();
 
   return (
+    <div className='flex flex-col h-screen'>
+      <Header setSidebarOpen={setSidebarOpen}  sidebarOpen={sidebarOpen} />
     <div className="flex h-screen bg-[#ECFCFD]">
       <Sidebar 
         activeTab={activeTab} 
@@ -50,14 +53,13 @@ const Dashboard = () => {
             deleteDocument={deleteDocument}
           />
         )}
-        
-        {activeTab === 'settings' && <SettingsTab />}
       </div>
       
       <SummaryPanel 
         selectedDoc={selectedDoc} 
         setSelectedDoc={setSelectedDoc} 
       />
+    </div>
     </div>
   );
 };
