@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { setDoc, doc } from "firebase/firestore";
 import { db } from "../config/firebase";
@@ -18,7 +18,7 @@ type FormData = {
 };
 
 const SignUp = () => {
-  const {loginWithGoogle, signUp} = useAuth();
+  const {loginWithGoogle, signUp, user} = useAuth();
   const navigate = useNavigate();
   const [loading, setloading] =useState(false)
 
@@ -29,11 +29,26 @@ const SignUp = () => {
     formState: { errors },
   } = useForm<FormData>();
 
+  useEffect(()=>{
+    if(user) navigate('/dashboard')
+  }, [user, navigate]);
 
-  const handleGoogleLogin = async ()=>{
-    loginWithGoogle()
-    navigate('/dashboard')
+ const handleGoogleLogin = async ()=>{
+  try{
+    const result = await loginWithGoogle();
+    const user = result.user;
+    await setDoc(doc(db, 'users', user.uid), {
+      uid: user.uid,
+      name: user.displayName || "No name",
+      email: user.email,
+      cretaedAt: new Date(),
+    }, {merge: true});
+    toast.success('signed in with google')
+  }catch(error: any){
+    console.log(error)
+    toast.success(error)
   }
+ }
 
   
   const onSubmit = async (data: FormData) => {
@@ -51,6 +66,7 @@ const SignUp = () => {
       navigate('/login')
     }catch(error){
       console.log(error)
+      toast.error("Failed to create account")
     }finally{
       setloading(false)
       reset()

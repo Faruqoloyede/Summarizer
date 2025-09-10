@@ -1,8 +1,11 @@
+import AIDashboard from "../components/Dashboard"
 
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div>
+      <AIDashboard />
+    </div>
   )
 }
 

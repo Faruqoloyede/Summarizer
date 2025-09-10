@@ -2,6 +2,12 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
+import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
 
 type FormData = {
   firstName: string;
@@ -16,8 +22,43 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
-    console.log("Form Submitted", data);
+  const {login, user, loginWithGoogle} = useAuth();
+  const navigate = useNavigate();
+  const [loading, setloading] = useState(false)
+
+  useEffect(()=>{
+    if(user) navigate('/dashboard')
+  }, [user, navigate]);
+
+  // handle google login
+   const handleGoogleLogin = async ()=>{
+  try{
+    const result = await loginWithGoogle();
+    const user = result.user;
+    await setDoc(doc(db, 'users', user.uid), {
+      uid: user.uid,
+      name: user.displayName || "No name",
+      email: user.email,
+      cretaedAt: new Date(),
+    }, {merge: true});
+    toast.success('signed in with google')
+  }catch(error: any){
+    console.log(error)
+    toast.success(error)
+  }
+ }
+  const onSubmit = async (data: FormData) => {
+    setloading(true)
+    try{
+      await login(data.email, data.password);
+      toast.success("Logged in successfully");
+      navigate('/dashboard')
+    }catch(error){
+      console.log(error)
+      toast.error("Failed to log in")
+    }finally{
+      setloading(false)
+    }
   };
 
   const fadeInUp = (delay = 0) => ({
@@ -99,7 +140,7 @@ const SignIn = () => {
             className="w-full bg-button cursor-pointer text-[#0E2E2E] font-medium font-poppins py-4 rounded-md hover:bg-opacity-90 transition duration-200"
             variants={fadeInUp(0.5)}
           >
-            Sign in
+           {loading ? "Signing In..." : "Sign In"}
           </motion.button>
         </motion.form>
 
@@ -121,6 +162,7 @@ const SignIn = () => {
           variants={fadeInUp(0.7)}
           initial="initial"
           animate="animate"
+          onClick={handleGoogleLogin}
         >
           <FcGoogle className="text-2xl" />
           Sign in with Google
