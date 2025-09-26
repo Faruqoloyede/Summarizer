@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Dashboard from "./pages/Dashboard";
 import Privateroute from "./protectedroute/Privateroute";
 import { Toaster } from "react-hot-toast";
+import Library from "./pages/Library";
 
 const App = () => {
   return (
@@ -18,6 +19,10 @@ const App = () => {
         <Route path="/dashboard" element={
           <Privateroute>
           <Dashboard />
+        </Privateroute>} />
+        <Route path="/library" element={
+          <Privateroute>
+          <Library />
         </Privateroute>} />
       </Routes>
     </Router>

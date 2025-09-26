@@ -1,12 +1,11 @@
-import { useState } from 'react';
-import Sidebar from './Sidebar';
-import HomeTab from './HomeTab';
-import Header from './Header';
+import { useState } from "react";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
+import LibraryTab from "../components/LibraryTab";
 
-const Dashboard = () => {
+
+const Library = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  
-
 
   return (
     <div className='flex flex-col h-screen'>
@@ -18,13 +17,13 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto p-6">
-       <HomeTab 
+       <LibraryTab 
         />
         
       </div>
     </div>
     </div>
   );
-};
+}
 
-export default Dashboard;
+export default Library

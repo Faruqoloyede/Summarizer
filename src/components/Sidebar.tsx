@@ -1,17 +1,22 @@
 import { FiHome, FiBook, FiLogOut } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 import UserProfile from './UserProfile';
+import { NavLink } from 'react-router-dom';
 
 interface SidebarProps {
-  activeTab: string;
-  setActiveTab: (tab: 'home' | 'library' | 'settings') => void;
+
   sidebarOpen: boolean;
-  setSidebarOpen: (open: boolean) => void;
+  
 }
 
+const nav_links = [
+  { name: 'Home', icon: <FiHome />, tab: 'dashboard' },
+  { name: 'Library', icon: <FiBook />, tab: 'library' },
+];
 
 
-const Sidebar = ({ activeTab, setActiveTab, sidebarOpen }: SidebarProps) => {
+
+const Sidebar = ({ sidebarOpen }: SidebarProps) => {
     const {logout} = useAuth()
 const handleLogout = async ()=>{
     await logout()
@@ -19,31 +24,33 @@ const handleLogout = async ()=>{
   return (
     <>
     <div className='bg-[#0E2E2E] text-white shadow-md transition-all duration-300 relative w-72 sm:block hidden'>
-      <nav className="mt-6">
-        <button 
-          onClick={() => setActiveTab('home')}
-          className={`flex items-center w-full p-4 ${activeTab === 'home' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
-        >
-          <FiHome className="text-lg" />
-         <span className="ml-3">Home</span>
-        </button>
-        
-        <button 
-          onClick={() => setActiveTab('library')}
-          className={`flex items-center w-full p-4 ${activeTab === 'library' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
-        >
-          <FiBook className="text-lg" />
-           <span className="ml-3">Library</span>
-        </button>
-        
-        <button 
-          onClick={handleLogout}
-          className={`flex items-center w-full p-4 ${activeTab === 'settings' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
-        >
-          <FiLogOut className="text-lg" />
-          <span className="ml-3">Logout</span>
-        </button>
-      </nav>
+     <nav className="mt-6">
+  {nav_links.map((link) => (
+    <NavLink
+      key={link.tab}
+      to={`/${link.tab}`}
+      className={({ isActive }) =>
+        `flex items-center w-full p-4 transition-colors ${
+          isActive
+            ? 'bg-[#44E5E7]/20 text-[#44E5E7]'
+            : 'text-gray-300 hover:bg-[#44E5E7]/10'
+        }`
+      }
+    >
+      <span className="text-lg">{link.icon}</span>
+      <span className="ml-3">{link.name}</span>
+    </NavLink>
+  ))}
+
+  <button
+    onClick={handleLogout}
+    className="flex items-center w-full p-4 text-gray-300 hover:bg-[#44E5E7]/10"
+  >
+    <FiLogOut className="text-lg" />
+    <span className="ml-3">Logout</span>
+  </button>
+</nav>
+
       <div className='absolute bottom-10 left-0 border-t border-[#44E5E7]/20'>
           <UserProfile/>
       </div>
@@ -52,31 +59,30 @@ const handleLogout = async ()=>{
       {sidebarOpen && (
          <div className='bg-[#0E2E2E] text-white shadow-md transition-all duration-300 relative w-64 z-40 sm:hidden block'>
       
-      <nav className="mt-6">
-        <button 
-          onClick={() => setActiveTab('home')}
-          className={`flex items-center w-full p-4 ${activeTab === 'home' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
-        >
-          <FiHome className="text-lg" />
-          <span className="ml-3">Home</span>
-        </button>
-        
-        <button 
-          onClick={() => setActiveTab('library')}
-          className={`flex items-center w-full p-4 ${activeTab === 'library' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
-        >
-          <FiBook className="text-lg" />
-          <span className="ml-3">Library</span>
-        </button>
-        
-        <button 
-          onClick={handleLogout}
-          className={`flex items-center w-full p-4 ${activeTab === 'settings' ? 'bg-[#44E5E7]/20 text-[#44E5E7]' : 'text-gray-300 hover:bg-[#44E5E7]/10'}`}
-        >
-          <FiLogOut className="text-lg" />
-          <span className="ml-3">Logout</span>
-        </button>
-      </nav>
+    {nav_links.map((link) => (
+   <NavLink
+      key={link.tab}
+      to={`/${link.tab}`} 
+      className={({ isActive }) =>
+        `flex items-center w-full p-4 transition-colors ${
+          isActive
+            ? 'bg-[#44E5E7]/20 text-[#44E5E7]'
+            : 'text-gray-300 hover:bg-[#44E5E7]/10'
+        }`
+      }
+    >
+      <span className="text-lg">{link.icon}</span>
+      <span className="ml-3">{link.name}</span>
+    </NavLink>
+))}
+<button
+    onClick={handleLogout}
+    className="flex items-center w-full p-4 text-gray-300 hover:bg-[#44E5E7]/10"
+  >
+    <FiLogOut className="text-lg" />
+    <span className="ml-3">Logout</span>
+  </button>
+
       <div className='absolute bottom-10 left-0 border-t border-[#44E5E7]/20'>
           <UserProfile />
       </div>

@@ -13,7 +13,8 @@ const Banner = () => {
         <Link to="/">
           <div className="flex items-center text-para gap-2">
             <IoMdArrowBack className="text-2xl" />
-            <span>Back</span>
+            <span>Back</span> 
+
           </div>
         </Link>
 
