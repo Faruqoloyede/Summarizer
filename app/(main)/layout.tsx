@@ -1,4 +1,4 @@
-import Banner from "@/components/Banner";
+
 
 export default function Layout({
   children,
@@ -6,8 +6,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex min-h-screen">
-      <Banner />
+    <div >
       {children}
     </div>
   );
