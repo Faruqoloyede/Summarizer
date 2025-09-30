@@ -1,3 +1,6 @@
+import Header from "@/components/Header";
+import PrivateRoute from "@/components/Privateroute";
+import Sidebar from "@/components/Sidebar";
 
 
 export default function Layout({
@@ -6,8 +9,14 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div >
-      {children}
+    <div className="flex flex-col min-h-screen overflow-hidden">
+        <Header />
+        <div className="flex items-start">
+            <Sidebar />
+            <PrivateRoute>
+            {children}
+            </PrivateRoute>
+        </div>
     </div>
   );
 }

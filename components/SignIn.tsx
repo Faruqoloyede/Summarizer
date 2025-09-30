@@ -28,7 +28,7 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user) router.push("/");
+    if (user) router.push("/dashboard");
   }, [user, router]);
 
   // handle google login
