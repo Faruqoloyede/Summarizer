@@ -4,6 +4,8 @@ import { FiHome, FiBook, FiLogOut } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useState } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import UserProfile from './UserProfile';
 
 
 const nav_links = [
@@ -13,6 +15,7 @@ const nav_links = [
 const Header = () => {
   const pathname = usePathname();
   const[sidebarOpen, setSidebarOpen] = useState(false)
+  const{logout} = useAuth()
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -35,6 +38,10 @@ const Header = () => {
         </Link>
       );
     });
+      const handleLogout =async ()=>{
+        await logout();
+      }
+
   return (
     <nav className='flex items-center justify-between bg-[#0E2E2E] px-4 py-6 shadow-md transition-all duration-300 relative'>
         <div className='flex items-center justify-between gap-x-3'>
@@ -53,6 +60,18 @@ const Header = () => {
            
           <div className='flex flex-col items-start gap-y-3'>
             {renderLinks()}
+
+            <button
+            onClick={handleLogout}
+            className="flex items-center w-full p-4 text-gray-300 hover:bg-[#44E5E7]/10"
+          >
+            <FiLogOut className="text-lg" />
+            <span className="ml-3">Logout</span>
+          </button>
+
+          <div className="absolute bottom-12 left-0 border-t border-[#44E5E7]/20">
+              <UserProfile />
+            </div>
           </div>
         </div>
     </nav>
