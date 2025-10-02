@@ -3,6 +3,7 @@ import { FiMenu } from 'react-icons/fi'
 import { FiHome, FiBook, FiLogOut } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useState } from 'react';
 
 
 const nav_links = [
@@ -11,6 +12,11 @@ const nav_links = [
 ];
 const Header = () => {
   const pathname = usePathname();
+  const[sidebarOpen, setSidebarOpen] = useState(false)
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
     const renderLinks = () =>
     nav_links.map((link) => {
       const isActive = pathname === `/${link.tab}`;
@@ -35,7 +41,7 @@ const Header = () => {
             <button 
                       className="p-2 rounded-lg hover:bg-[#44E5E7]/10 text-gray-300 sm:hidden block"
                     >
-                      <FiMenu className='text-xl' />
+                      <FiMenu className='text-xl' onClick={toggleSidebar} />
                     </button>
         <h6 className="flex items-center gap-3">
             <img src="/Logo.svg" alt="logo" />
@@ -43,7 +49,7 @@ const Header = () => {
         </h6>
         </div>
 
-        <div className='fixed top-20 left-0 sm:hidden block bg-[#0E2E2E] p-4 w-64 h-full'>
+        <div className={`${sidebarOpen ? 'block' : 'hidden'} fixed top-20 left-0 sm:hidden block bg-[#0E2E2E] p-4 w-64 h-full`}>
            
           <div className='flex flex-col items-start gap-y-3'>
             {renderLinks()}
