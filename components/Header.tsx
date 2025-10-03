@@ -69,7 +69,7 @@ const Header = () => {
             <span className="ml-3">Logout</span>
           </button>
 
-          <div className="absolute bottom-12 left-0 border-t border-[#44E5E7]/20">
+          <div className="absolute bottom-20 left-0 border-t border-[#44E5E7]/20">
               <UserProfile />
             </div>
           </div>
